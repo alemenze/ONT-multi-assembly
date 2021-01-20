@@ -23,8 +23,12 @@ workflow Assemblies {
         reads
         replicate_num
     main:
-        canu_assembly(
+        random_subset(
             reads,
+            replicate_num
+        )
+        canu_assembly(
+            random_subset.out.fastq,
             replicate_num
         )
         canu_quast(
@@ -33,7 +37,7 @@ workflow Assemblies {
             'canu_qc'
         )
         flye_assembly(
-            reads,
+            random_subset.out.fastq,
             replicate_num
         )
         flye_quast(
@@ -42,7 +46,7 @@ workflow Assemblies {
             'flye_qc'
         )
         miniasm_assembly(
-            reads,
+            random_subset.out.fastq,
             replicate_num
         )
         miniasm_quast(
