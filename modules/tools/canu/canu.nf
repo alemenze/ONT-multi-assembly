@@ -28,7 +28,8 @@ process canu_assembly {
 
     script:
         """
-        canu -p ${meta} -d ${meta}_canu genomeSize=$params.assembly_genome_size -nanopore-raw $reads useGrid=false
+        canu -p ${meta} -d ${meta}_canu genomeSize=${params.assembly_genome_size} -nanopore-raw $reads \
+            maxThreads=20
         """
 
 }
