@@ -29,7 +29,7 @@ process canu_assembly {
     script:
         """
         canu -p ${meta} -d ${meta}_canu genomeSize=${params.assembly_genome_size} useGrid=false -nanopore-raw $reads \
-            maxThreads=38 merylMemory=185G merylThreads=38 ovsMemory=185G batMemory=185G redMemory=185G redThreads=38 oeaMemory=185G oeaThreads=38 corMemory=185G corThreads=38 ovsThreads=38
+            maxThreads=38 merylMemory=96G merylThreads=1 ovsMemory=185G batMemory=185G redMemory=185G redThreads=38 oeaMemory=185G oeaThreads=38 corMemory=185G corThreads=38 ovsThreads=38
         """
 
 }
