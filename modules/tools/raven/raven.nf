@@ -4,31 +4,30 @@
 nextflow.enable.dsl=2
 
 // Process definition
-process canu_assembly {
+process raven_assembly {
     tag "${meta}"
 
     if (!workflow.profile=='google' && !workflow.profile=='slurm'){
         maxForks 1
     }
 
-    publishDir "${params.outdir}/${meta}/canu/${replicate}",
+    publishDir "${params.outdir}/${meta}/raven/${replicate}",
         mode: "copy",
         overwrite: true,
         saveAs: { filename -> filename }
 
-    container "quay.io/biocontainers/canu:2.1.1--he1b5a44_0"
+    container "quay.io/biocontainers/raven-assembler:1.3.0--h8b12597_0"
 
     input:
         tuple val(meta), path(reads)
         val(replicate)
     
     output:
-        tuple val(meta), path("${meta}_canu/*.contigs.fasta"), emit: assembly
-        tuple val(meta), path("${meta}_canu/*.gfa"), emit: gfa
+        tuple val(meta), path("*.fasta"), emit: assembly
 
     script:
         """
-        canu -p ${meta} -d ${meta}_canu genomeSize=${params.assembly_genome_size} useGrid=false -nanopore-raw $reads
+        raven -t $params.threads $reads > raven.fasta
         """
 
 }
