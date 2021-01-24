@@ -7,16 +7,15 @@ nextflow.enable.dsl=2
 process canu_assembly {
     tag "${meta}"
 
-    if (!workflow.profile=='google' && !workflow.profile=='slurm'){
-        maxForks 1
-    }
-
     publishDir "${params.outdir}/${meta}/canu/${replicate}",
         mode: "copy",
         overwrite: true,
         saveAs: { filename -> filename }
+    if (!workflow.profile=='google' && !workflow.profile=='slurm'){
+        maxForks 1
+    }
 
-    container "alemenze/canu-docker"
+    container "quay.io/biocontainers/canu:2.1.1--he1b5a44_0"
 
     input:
         tuple val(meta), path(reads)
@@ -28,9 +27,7 @@ process canu_assembly {
 
     script:
         """
-        canu -p ${meta} -d ${meta}_canu genomeSize=${params.assembly_genome_size} useGrid=false -nanopore-raw $reads \
-            maxThreads=38 merylMemory=185G merylThreads=38 hapThreads=38 batMemory=185G redMemory=185G \
-            redThreads=38 oeaMemory=185G oeaThreads=38 corMemory=185G corThreads=38
+        canu -p ${meta} -d ${meta}_canu genomeSize=${params.assembly_genome_size} useGrid=false -nanopore $reads
         """
 
 }

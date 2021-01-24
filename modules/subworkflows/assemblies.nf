@@ -29,6 +29,15 @@ workflow Assemblies {
             reads,
             replicate_num
         )
+        canu_assembly(
+            random_subset.out.fastq,
+            replicate_num
+        )
+        canu_quast(
+            canu_assembly.out.assembly,
+            replicate_num,
+            'canu_qc'
+        )
         flye_assembly(
             random_subset.out.fastq,
             replicate_num
@@ -57,7 +66,7 @@ workflow Assemblies {
             'raven_qc'
         )
         temp_assemblies=Channel.empty()
-        temp_assemblies=raven_assembly.out.assembly.join(flye_assembly.out.assembly)
+        temp_assemblies=canu_assembly.out.assembly.join(flye_assembly.out.assembly)
         assemblies=Channel.empty()
         assemblies=temp_assemblies.join(miniasm_assembly.out.assembly)
 
