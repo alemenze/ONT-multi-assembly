@@ -15,7 +15,7 @@ process canu_assembly {
         maxForks 1
     }
 
-    container "quay.io/biocontainers/canu:2.1.1--he1b5a44_0"
+    container "staphb/canu-racon"
 
     input:
         tuple val(meta), path(reads)
