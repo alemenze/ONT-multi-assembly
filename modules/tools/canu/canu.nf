@@ -16,7 +16,7 @@ process canu_assembly {
         overwrite: true,
         saveAs: { filename -> filename }
 
-    container "quay.io/biocontainers/canu:2.1.1--he1b5a44_0"
+    container "alemenze/canu-docker"
 
     input:
         tuple val(meta), path(reads)
@@ -29,7 +29,8 @@ process canu_assembly {
     script:
         """
         canu -p ${meta} -d ${meta}_canu genomeSize=${params.assembly_genome_size} useGrid=false -nanopore-raw $reads \
-            merylMemory=24 merylThreads=4
+            maxThreads=38 merylMemory=185G merylThreads=38 hapThreads=38 batMemory=185G redMemory=185G \
+            redThreads=38 oeaMemory=185G oeaThreads=38 corMemory=185G corThreads=38
         """
 
 }
