@@ -10,9 +10,11 @@ include {random_subset} from '../tools/rasusa/rasusa'
 include {canu_assembly} from '../tools/canu/canu'
 include {flye_assembly} from '../tools/flye/flye'
 include {miniasm_assembly} from '../tools/miniasm/miniasm'
+include {raven_assebmbly} from '../tools/raven/raven'
 include {quast as canu_quast} from '../tools/quast/quast'
 include {quast as flye_quast} from '../tools/quast/quast'
 include {quast as miniasm_quast} from '../tools/quast/quast'
+include {quast as raven_quast} from '../tools/quast/quast'
 
 ////////////////////////////////////////////////////
 /* --           RUN MAIN WORKFLOW              -- */
@@ -26,15 +28,6 @@ workflow Assemblies {
         random_subset(
             reads,
             replicate_num
-        )
-        canu_assembly(
-            random_subset.out.fastq,
-            replicate_num
-        )
-        canu_quast(
-            canu_assembly.out.assembly,
-            replicate_num,
-            'canu_qc'
         )
         flye_assembly(
             random_subset.out.fastq,
@@ -54,8 +47,17 @@ workflow Assemblies {
             replicate_num,
             'miniasm_qc'
         )
+        raven_assembly(
+            random_subset.out.fastq,
+            replicate_num
+        )
+        raven_quast(
+            raven_assembly.out.assembly,
+            replicate_num,
+            'raven_qc'
+        )
         temp_assemblies=Channel.empty()
-        temp_assemblies=canu_assembly.out.assembly.join(flye_assembly.out.assembly)
+        temp_assemblies=raven_assembly.out.assembly.join(flye_assembly.out.assembly)
         assemblies=Channel.empty()
         assemblies=temp_assemblies.join(miniasm_assembly.out.assembly)
 
