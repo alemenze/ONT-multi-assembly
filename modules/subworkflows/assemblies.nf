@@ -67,8 +67,10 @@ workflow Assemblies {
         )
         temp_assemblies=Channel.empty()
         temp_assemblies=canu_assembly.out.assembly.join(flye_assembly.out.assembly)
+        temp2_assemblies=Channel.empty()
+        temp2_assemblies=temp_assemblies.join(raven_assembly.out.assembly)
         assemblies=Channel.empty()
-        assemblies=temp_assemblies.join(miniasm_assembly.out.assembly)
+        assemblies=temp2_assemblies.join(miniasm_assembly.out.assembly)
 
     emit:
         assemblies

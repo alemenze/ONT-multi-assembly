@@ -11,7 +11,7 @@ This workflow is built to provide a multi-assembly approach for Oxford Nanopore 
 
 ## Summary Features:
 - Random subsampling of reads for multiple assemblies with [Rasusa](https://github.com/mbhall88/rasusa)
-- Replicate assembly with [Flye](https://github.com/fenderglass/Flye), [Canu](https://github.com/marbl/canu), and [Miniasm/minimap2](https://github.com/lh3/miniasm)
+- Replicate assembly with [Flye](https://github.com/fenderglass/Flye), [Canu](https://github.com/marbl/canu), [Raven](https://github.com/lbcb-sci/raven), and [Miniasm/minimap2](https://github.com/lh3/miniasm)
 - Assembly QC with [Quast](http://bioinf.spbau.ru/quast)
 
 ## Example Commands
