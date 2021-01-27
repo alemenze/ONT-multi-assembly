@@ -7,7 +7,7 @@ nextflow.enable.dsl=2
 process quast {
     tag "${meta}"
 
-    publishDir "${params.outdir}/quast/${replicate}/${type}",
+    publishDir "${params.outdir}/${meta}/${type}/${replicate}/quast/",
         mode: "copy",
         overwrite: true,
         saveAs: { filename -> filename }

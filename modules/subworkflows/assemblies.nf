@@ -36,7 +36,7 @@ workflow Assemblies {
         canu_quast(
             canu_assembly.out.assembly,
             replicate_num,
-            'canu_qc'
+            'canu'
         )
         flye_assembly(
             random_subset.out.fastq,
@@ -45,7 +45,7 @@ workflow Assemblies {
         flye_quast(
             flye_assembly.out.assembly,
             replicate_num,
-            'flye_qc'
+            'flye'
         )
         miniasm_assembly(
             random_subset.out.fastq,
@@ -54,7 +54,7 @@ workflow Assemblies {
         miniasm_quast(
             miniasm_assembly.out.assembly,
             replicate_num,
-            'miniasm_qc'
+            'miniasm'
         )
         raven_assembly(
             random_subset.out.fastq,
@@ -63,7 +63,7 @@ workflow Assemblies {
         raven_quast(
             raven_assembly.out.assembly,
             replicate_num,
-            'raven_qc'
+            'raven'
         )
         temp_assemblies=Channel.empty()
         temp_assemblies=canu_assembly.out.assembly.join(flye_assembly.out.assembly)
